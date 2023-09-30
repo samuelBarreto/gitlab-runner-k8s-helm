@@ -20,64 +20,66 @@
 ### criar arquivo values.yaml
 
 
-    ### Configuração necessária
+### Configuração necessária
 
-            Para que o GitLab Runner funcione, seu arquivo de configuração deve especificar o seguinte:
+        Para que o GitLab Runner funcione, seu arquivo de configuração deve especificar o seguinte:
 
-                gitlabUrl: O URL completo do servidor GitLab para registrar o executor. Por exemplo,, https://gitlab.example.com.
-                rbac: { enable: true }: Crie regras RBAC para o GitLab Runner criar pods para executar trabalhos. Se você tiver uma serviceAccount existente que prefere usar, você também deve definir rbac: { serviceAccountName: "SERVICE_ACCOUNT_NAME" }. Para obter mais informações sobre as permissões mínimas necessárias para o serviceAccount
+        gitlabUrl: O URL completo do servidor GitLab para registrar o executor. Por exemplo,, https://gitlab.example.com.
+        rbac: { enable: true }: Crie regras RBAC para o GitLab Runner criar pods para executar trabalhos. Se você tiver uma serviceAccount existente que prefere usar, você também deve definir rbac: { serviceAccountName: "SERVICE_ACCOUNT_NAME" }. Para obter mais informações sobre as permissões mínimas necessárias para o serviceAccount
 
-    '''' FILE.YAML '''
+## '''' FILE.YAML '''
 
-    ### Aqui 
+  ## Aqui 
 
-            Alguns detalhes cruciais que precisam de sua atenção são:
+        Alguns detalhes cruciais que precisam de sua atenção são:
 
-            gitlabUrl: substitua pelo URL da sua instância do GitLab. Se você usa Gitlab.com, o valor deve ser https://gitlab.com
-            runnerRegistrationToken: pode ser encontrado no menu CI/CD > Runner
-            privilegiado: defina verdadeiro se você usar docker-in-docker (dind)
+        gitlabUrl: substitua pelo URL da sua instância do GitLab. Se você usa Gitlab.com, o valor deve ser https://gitlab.com
+        runnerRegistrationToken: pode ser encontrado no menu CI/CD > Runner
+        privilegiado: defina verdadeiro se você usar docker-in-docker (dind)
+            
+# values.yaml
 
-            ''''
-                        gitlabUrl: https://gitlab.example.com/
 
-                        runnerRegistrationToken: "xxx"
+        gitlabUrl: https://gitlab.example.com/
 
-                        concurrent: 10
+        runnerRegistrationToken: "xxx"
 
-                        checkInterval: 30
+        concurrent: 10
 
-                        rbac:       
-                        create: true
-                        rules:
-                            - apiGroups: [""]
-                            resources: ["pods"]
-                            verbs: ["list", "get", "watch", "create", "delete"]
-                            - apiGroups: [""]
-                            resources: ["pods/exec"]
-                            verbs: ["create"]
-                            - apiGroups: [""]
-                            resources: ["pods/log"]
-                            verbs: ["get"]
-                            - apiGroups: [""]
-                            resources: ["pods/attach"]
-                            verbs: ["list", "get", "create", "delete", "update"]
-                            - apiGroups: [""]
-                            resources: ["secrets"]
-                            verbs: ["list", "get", "create", "delete", "update"]      
-                            - apiGroups: [""]
-                            resources: ["configmaps"]
-                            verbs: ["list", "get", "create", "delete", "update"]     
+        checkInterval: 30
 
-                        runners:
-                        privileged: true
-                        
-                        config: |
-                            [[runners]]
-                            [runners.kubernetes]
-                                namespace = "gitlab"
-                                tls_verify = false
-                                image = "docker:19"
-                                privileged = true
+        rbac:
+        create: true
+        rules:
+            - apiGroups: [""]
+            resources: ["pods"]
+            verbs: ["list", "get", "watch", "create", "delete"]
+            - apiGroups: [""]
+            resources: ["pods/exec"]
+            verbs: ["create"]
+            - apiGroups: [""]
+            resources: ["pods/log"]
+            verbs: ["get"]
+            - apiGroups: [""]
+            resources: ["pods/attach"]
+            verbs: ["list", "get", "create", "delete", "update"]
+            - apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["list", "get", "create", "delete", "update"]      
+            - apiGroups: [""]
+            resources: ["configmaps"]
+            verbs: ["list", "get", "create", "delete", "update"]     
+
+        runners:
+        privileged: true
+        
+        config: |
+            [[runners]]
+            [runners.kubernetes]
+                namespace = "gitlab"
+                tls_verify = false
+                image = "docker:19"
+                privileged = true
  
 
 instalacao com helm
