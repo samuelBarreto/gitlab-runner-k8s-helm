@@ -17,7 +17,7 @@
 
          --- kubectl create namespace gitlab 
 
-#### criar arquivo values.yaml
+### criar arquivo values.yaml
 
 
     Configuração necessária
@@ -79,7 +79,7 @@
                         privileged = true
     ''
 
-Intstalar com helm
+instalacao com helm
 ''''
     helm install gitlab-runner gitlab/gitlab-runner -f values.yaml --namespace gitlab
 ''
